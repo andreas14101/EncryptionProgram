@@ -101,8 +101,8 @@ public class Ase
         using (var aes = new AesGcm(key))
         {
             
-            var nonce = new byte[AesGcm.NonceByteSizes.MaxSize];
-            RandomNumberGenerator.Fill(nonce);
+            var iv = new byte[AesGcm.NonceByteSizes.MaxSize];
+            RandomNumberGenerator.Fill(iv);
             
             var tag = new byte[AesGcm.TagByteSizes.MaxSize];
             
@@ -112,9 +112,9 @@ public class Ase
             
           
             
-            aes.Encrypt(nonce,plaintextBytes,ciphertext,tag);
+            aes.Encrypt(iv,plaintextBytes,ciphertext,tag);
             
-            writeDocument(ciphertext, nonce, tag);
+            writeDocument(ciphertext, iv, tag);
             readDocument();
         }
     }
